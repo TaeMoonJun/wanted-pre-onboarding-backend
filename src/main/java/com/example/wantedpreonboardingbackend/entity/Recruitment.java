@@ -35,5 +35,10 @@ public class Recruitment {
     @Column(name = "tech")
     private String tech;
 
-
+    public void update(String position, Integer reward, String content, String tech){
+        this.position = position;
+        this.reward = reward;
+        this.content = content;
+        this.tech = tech;
+    }
 }
