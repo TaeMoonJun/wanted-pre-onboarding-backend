@@ -1,9 +1,6 @@
 package com.example.wantedpreonboardingbackend.service;
 
-import com.example.wantedpreonboardingbackend.dto.RecruitmentResponse;
-import com.example.wantedpreonboardingbackend.dto.RegisterRecruitmentRequest;
-import com.example.wantedpreonboardingbackend.dto.RecruitmentSummaryResponse;
-import com.example.wantedpreonboardingbackend.dto.UpdateRecruitmentRequest;
+import com.example.wantedpreonboardingbackend.dto.*;
 import com.example.wantedpreonboardingbackend.entity.Company;
 import com.example.wantedpreonboardingbackend.entity.Recruitment;
 import com.example.wantedpreonboardingbackend.repository.CompanyRepository;
@@ -71,5 +68,26 @@ public class RecruitmentServiceImpl implements RecruitmentService {
                         recruitment.getCompany().getId(), recruitment.getPosition(),
                         recruitment.getReward(), recruitment.getTech()))
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public RecruitmentDetailResponse getRecruitmentDetail(Long recruitmentId) {
+        Recruitment recruitment = recruitmentRepository.findById(recruitmentId).get();
+        Company company = companyRepository.findById(recruitment.getCompany().getId()).get();
+        List<Long> companyRecruitments = recruitmentRepository.findAllByCompanyId(company.getId())
+                .stream().map(Recruitment::getId)
+                .collect(Collectors.toList());
+
+        return RecruitmentDetailResponse.builder()
+                .id(recruitment.getId())
+                .company(company.getName())
+                .nation(company.getNation())
+                .region(company.getRegion())
+                .position(recruitment.getPosition())
+                .reward(recruitment.getReward())
+                .tech(recruitment.getTech())
+                .content(recruitment.getContent())
+                .companyRecruitments(companyRecruitments)
+                .build();
     }
 }
