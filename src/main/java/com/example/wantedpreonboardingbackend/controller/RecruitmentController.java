@@ -1,9 +1,6 @@
 package com.example.wantedpreonboardingbackend.controller;
 
-import com.example.wantedpreonboardingbackend.dto.RecruitmentResponse;
-import com.example.wantedpreonboardingbackend.dto.RecruitmentSummaryResponse;
-import com.example.wantedpreonboardingbackend.dto.RegisterRecruitmentRequest;
-import com.example.wantedpreonboardingbackend.dto.UpdateRecruitmentRequest;
+import com.example.wantedpreonboardingbackend.dto.*;
 import com.example.wantedpreonboardingbackend.service.RecruitmentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -36,5 +33,10 @@ public class RecruitmentController {
     @GetMapping("")
     ResponseEntity<List<RecruitmentSummaryResponse>> getRecruitments(){
         return ResponseEntity.ok(recruitmentService.getRecruitments());
+    }
+
+    @GetMapping("/{id}")
+    ResponseEntity<RecruitmentDetailResponse> getRecruitmentDetail(@PathVariable("id") Long id){
+        return ResponseEntity.ok(recruitmentService.getRecruitmentDetail(id));
     }
 }
