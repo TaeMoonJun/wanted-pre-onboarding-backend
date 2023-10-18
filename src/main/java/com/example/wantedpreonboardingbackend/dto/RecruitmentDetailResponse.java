@@ -13,7 +13,7 @@ public class RecruitmentDetailResponse {
     private Long id;
     private String company;
     private String nation;
-    private String religion;
+    private String region;
     private String position;
     private Integer reward;
     private String tech;
