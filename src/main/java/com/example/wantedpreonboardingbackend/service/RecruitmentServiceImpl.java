@@ -3,8 +3,12 @@ package com.example.wantedpreonboardingbackend.service;
 import com.example.wantedpreonboardingbackend.dto.*;
 import com.example.wantedpreonboardingbackend.entity.Company;
 import com.example.wantedpreonboardingbackend.entity.Recruitment;
+import com.example.wantedpreonboardingbackend.entity.User;
+import com.example.wantedpreonboardingbackend.entity.UserRecruitment;
 import com.example.wantedpreonboardingbackend.repository.CompanyRepository;
 import com.example.wantedpreonboardingbackend.repository.RecruitmentRepository;
+import com.example.wantedpreonboardingbackend.repository.UserRecruitmentRepository;
+import com.example.wantedpreonboardingbackend.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,6 +22,8 @@ import java.util.stream.Collectors;
 public class RecruitmentServiceImpl implements RecruitmentService {
     private final RecruitmentRepository recruitmentRepository;
     private final CompanyRepository companyRepository;
+    private final UserRepository userRepository;
+    private final UserRecruitmentRepository userRecruitmentRepository;
 
     @Override
     public RecruitmentResponse createRecruitment(RegisterRecruitmentRequest registerRecruitmentRequest) {
@@ -89,5 +95,19 @@ public class RecruitmentServiceImpl implements RecruitmentService {
                 .content(recruitment.getContent())
                 .companyRecruitments(companyRecruitments)
                 .build();
+    }
+
+    @Override
+    public void applyRecruitment(Long recruitmentId, Long userId) {
+        Recruitment recruitment = recruitmentRepository.findById(recruitmentId).get();
+        User user = userRepository.findById(userId).get();
+
+        if(!userRecruitmentRepository.existsByUserAndRecruitment(user, recruitment)){
+            UserRecruitment applied = UserRecruitment.builder()
+                    .user(user)
+                    .recruitment(recruitment)
+                    .build();
+            userRecruitmentRepository.save(applied);
+        }
     }
 }
