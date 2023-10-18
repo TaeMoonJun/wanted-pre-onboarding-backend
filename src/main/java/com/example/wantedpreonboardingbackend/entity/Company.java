@@ -30,6 +30,7 @@ public class Company {
     @Column(name = "region")
     private String region;
 
-    @OneToMany(mappedBy = "recruitment_id", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "company", cascade = CascadeType.ALL)
+    @Builder.Default
     private List<Recruitment> recruitments = new ArrayList<>();
 }

@@ -38,6 +38,7 @@ public class Recruitment {
     private String tech;
 
     @OneToMany(mappedBy = "recruitment", cascade = CascadeType.REMOVE)
+    @Builder.Default
     private List<UserRecruitment> appliedUsers = new ArrayList<>();
 
     public void addUser(UserRecruitment user){
