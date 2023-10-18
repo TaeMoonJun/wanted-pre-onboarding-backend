@@ -6,6 +6,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Builder
@@ -34,6 +36,13 @@ public class Recruitment {
 
     @Column(name = "tech")
     private String tech;
+
+    @OneToMany(mappedBy = "recruitment", cascade = CascadeType.REMOVE)
+    private List<UserRecruitment> appliedUsers = new ArrayList<>();
+
+    public void addUser(UserRecruitment user){
+        appliedUsers.add(user);
+    }
 
     public void update(String position, Integer reward, String content, String tech){
         this.position = position;

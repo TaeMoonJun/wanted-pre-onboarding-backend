@@ -22,5 +22,9 @@ public class User {
     private Long id;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
-    private List<Recruitment> appliedRecruitments = new ArrayList<>();
+    private List<UserRecruitment> appliedRecruitments = new ArrayList<>();
+
+    public void addRecruitment(UserRecruitment recruitment){
+        appliedRecruitments.add(recruitment);
+    }
 }
