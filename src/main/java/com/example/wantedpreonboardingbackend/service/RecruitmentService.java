@@ -14,4 +14,6 @@ public interface RecruitmentService {
     List<RecruitmentSummaryResponse> getRecruitments();
 
     RecruitmentDetailResponse getRecruitmentDetail(Long recruitmentId);
+
+    void applyRecruitment(Long recruitmentId, Long userId);
 }
