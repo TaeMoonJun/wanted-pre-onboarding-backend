@@ -39,4 +39,10 @@ public class RecruitmentController {
     ResponseEntity<RecruitmentDetailResponse> getRecruitmentDetail(@PathVariable("id") Long id){
         return ResponseEntity.ok(recruitmentService.getRecruitmentDetail(id));
     }
+
+    @PostMapping("/{id}")
+    ResponseEntity<String> applyRecruitment(@PathVariable("id") Long recruitmentId, @RequestBody Long userId){
+        recruitmentService.applyRecruitment(recruitmentId, userId);
+        return ResponseEntity.ok("Successfully Applied");
+    }
 }
