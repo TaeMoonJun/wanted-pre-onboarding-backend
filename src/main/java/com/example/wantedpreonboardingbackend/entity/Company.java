@@ -6,6 +6,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Builder
@@ -27,4 +29,7 @@ public class Company {
 
     @Column(name = "region")
     private String region;
+
+    @OneToMany(mappedBy = "recruitment_id", cascade = CascadeType.ALL)
+    private List<Recruitment> recruitments = new ArrayList<>();
 }

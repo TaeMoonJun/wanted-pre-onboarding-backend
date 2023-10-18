@@ -19,7 +19,7 @@ public class Recruitment {
     @Column(name = "recruitment_id")
     private Long id;
 
-    @OneToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "company_id")
     private Company company;
 
